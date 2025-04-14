@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "957382845461",
+    "project_id": "gyorsnyomdaapp-31284",
+    "storage_bucket": "gyorsnyomdaapp-31284.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957382845461:android:e9160ffb1e36309f831a1c",
+        "android_client_info": {
+          "package_name": "com.example.gyorsnyomdaapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1dNi5uYNaKLB47riFyWWPKEBrzH-ojgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
