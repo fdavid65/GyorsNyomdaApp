@@ -7,85 +7,109 @@
     android:padding="24dp"
     android:background="?android:colorBackground">
 
-    <!-- App logó -->
-    <TextView
-        android:id="@+id/textViewLogo"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/loginFormContainer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="GyorsNyomda"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="?android:textColorPrimary"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Cím: Regisztráció -->
-    <TextView
-        android:id="@+id/textViewRegisterTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Regisztráció"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="?android:textColorSecondary"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewLogo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- App logó -->
+        <TextView
+            android:id="@+id/textViewLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GyorsNyomda"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="?android:textColorPrimary" />
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:backgroundTint="?attr/colorPrimary"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewRegisterTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        <!-- Cím: Regisztráció -->
+        <TextView
+            android:id="@+id/textViewRegisterTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Regisztráció"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="?android:textColorSecondary"
+            android:layout_marginTop="8dp" />
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:hint="Jelszó"
-        android:inputType="textPassword"
-        android:backgroundTint="?attr/colorPrimary"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/editTextEmail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        <!-- Felhasználónév mező -->
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Felhasználónév"
+            android:inputType="textPersonName"
+            android:backgroundTint="?attr/colorPrimary"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Regisztráció"
-        app:layout_constraintTop_toBottomOf="@id/editTextPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        <!-- Email mező -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:backgroundTint="?attr/colorPrimary"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="16dp" />
 
-    <!-- Felirat a bejelentkezéshez -->
-    <TextView
-        android:id="@+id/textViewLoginRedirect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Már van fiókom, bejelentkezés"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintTop_toBottomOf="@id/buttonRegister"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- Jelszó mező -->
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Jelszó"
+            android:inputType="textPassword"
+            android:backgroundTint="?attr/colorPrimary"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="12dp" />
+
+        <!-- Regisztráció gomb -->
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Regisztráció"
+            android:layout_marginTop="24dp" />
+
+        <!-- Hibaszöveg -->
+        <TextView
+            android:id="@+id/errorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:text=""
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="14sp" />
+
+        <!-- Bejelentkezés link -->
+        <TextView
+            android:id="@+id/textViewLoginRedirect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Már van fiókom, bejelentkezés"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:minHeight="48dp"
+            android:minWidth="48dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

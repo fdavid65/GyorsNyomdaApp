@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +16,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEditText, passwordEditText;
     private Button loginButton;
+    private TextView errorTextView;
     private FirebaseAuth mAuth;
 
     @Override
@@ -26,44 +27,53 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
+        errorTextView = findViewById(R.id.errorTextView);
+        errorTextView.setVisibility(View.GONE); // Kezdetben rejtve
 
         mAuth = FirebaseAuth.getInstance();
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+        loginButton.setOnClickListener(v -> {
+            errorTextView.setVisibility(View.GONE); // előző hiba törlése
 
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
-                } else {
-                    loginUser(email, password);
-                }
+            String email = emailEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+
+            // --- Validáció ---
+            if (email.isEmpty()) {
+                showError("Az email cím megadása kötelező!");
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                showError("Érvénytelen email cím formátum!");
+            } else if (password.isEmpty()) {
+                showError("A jelszó megadása kötelező!");
+            } else {
+                loginUser(email, password);
             }
         });
 
         findViewById(R.id.textViewRegisterRedirect).setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             finish();
         });
-
     }
 
     private void loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // If sign in is successful, go to the MainActivity
+                        // Ha sikeres a bejelentkezés, átirányítás a MainActivity-be
                         FirebaseUser user = mAuth.getCurrentUser();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        finish(); // Close LoginActivity
+                        finish(); // A LoginActivity bezárása
                     } else {
-                        // If sign in fails, display a message to the user
-                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        // Ha nem sikerül a bejelentkezés
+                        showError("Hibás email cím vagy jelszó!");
                     }
                 });
+    }
+
+    private void showError(String message) {
+        errorTextView.setText(message);
+        errorTextView.setVisibility(View.VISIBLE);
     }
 }
