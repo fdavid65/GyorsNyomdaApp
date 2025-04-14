@@ -1,4 +1,12 @@
 <resources>
-    <string name="app_name">GyorsNyomdaApp</string>
-    <string name="kezd_k_perny_sikeres_bejelentkez_s">Kezdőképernyő, sikeres bejelentkezés!</string>
+    <string name="app_name">GyorsNyomda</string>
+    <string name="login_title">Bejelentkezés</string>
+    <string name="register_title">Regisztráció</string>
+    <string name="email_hint">Email</string>
+    <string name="username_hint">Felhasználónév</string>
+    <string name="password_hint">Jelszó</string>
+    <string name="login_button">Bejelentkezés</string>
+    <string name="register_button">Regisztráció</string>
+    <string name="redirect_to_login">Már van fiókom, bejelentkezés</string>
+    <string name="redirect_to_register">Még nincs fiókom, regisztráció</string>
 </resources>

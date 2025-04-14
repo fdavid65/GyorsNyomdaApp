@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="?android:colorBackground">
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:id="@+id/loginFormContainer"
@@ -23,7 +23,7 @@
             android:id="@+id/textViewLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GyorsNyomda"
+            android:text="@string/app_name"
             android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="?android:textColorPrimary" />
@@ -33,7 +33,7 @@
             android:id="@+id/textViewLoginTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bejelentkezés"
+            android:text="@string/login_title"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="?android:textColorSecondary"
@@ -44,7 +44,7 @@
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="Email"
+            android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
             android:backgroundTint="?attr/colorPrimary"
             android:paddingStart="16dp"
@@ -56,7 +56,7 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="Jelszó"
+            android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:backgroundTint="?attr/colorPrimary"
             android:paddingStart="16dp"
@@ -68,7 +68,8 @@
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bejelentkezés"
+            android:text="@string/login_button"
+            android:backgroundTint="@color/primaryColor"
             android:layout_marginTop="24dp" />
 
         <!-- Hibaszöveg -->
@@ -88,13 +89,14 @@
             android:id="@+id/textViewRegisterRedirect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Még nincs fiókom, regisztráció"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="14sp"
-            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:clickable="true"
             android:focusable="true"
-            android:layout_gravity="center_horizontal" />
+            android:minHeight="48dp"
+            android:text="@string/redirect_to_register"
+            android:textColor="@color/accentColor"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

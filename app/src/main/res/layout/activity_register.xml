@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="?android:colorBackground">
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:id="@+id/loginFormContainer"
@@ -23,7 +23,7 @@
             android:id="@+id/textViewLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GyorsNyomda"
+            android:text="@string/app_name"
             android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="?android:textColorPrimary" />
@@ -33,7 +33,7 @@
             android:id="@+id/textViewRegisterTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Regisztráció"
+            android:text="@string/register_title"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="?android:textColorSecondary"
@@ -44,11 +44,12 @@
             android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="Felhasználónév"
+            android:hint="@string/username_hint"
             android:inputType="textPersonName"
             android:backgroundTint="?attr/colorPrimary"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            android:autofillHints="username"
             android:layout_marginTop="16dp" />
 
         <!-- Email mező -->
@@ -56,7 +57,7 @@
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="Email"
+            android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
             android:backgroundTint="?attr/colorPrimary"
             android:paddingStart="16dp"
@@ -68,7 +69,7 @@
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="Jelszó"
+            android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:backgroundTint="?attr/colorPrimary"
             android:paddingStart="16dp"
@@ -80,7 +81,8 @@
             android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Regisztráció"
+            android:text="@string/register_button"
+            android:backgroundTint="@color/primaryColor"
             android:layout_marginTop="24dp" />
 
         <!-- Hibaszöveg -->
@@ -100,16 +102,15 @@
             android:id="@+id/textViewLoginRedirect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Már van fiókom, bejelentkezés"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="14sp"
-            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:clickable="true"
             android:focusable="true"
-            android:minHeight="48dp"
-            android:minWidth="48dp"
             android:gravity="center"
-            android:layout_gravity="center_horizontal" />
+            android:minHeight="48dp"
+            android:text="@string/redirect_to_login"
+            android:textColor="@color/accentColor"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

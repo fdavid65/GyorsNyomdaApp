@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,16 +38,18 @@ public class RegisterActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.editTextUsername);
         registerButton = findViewById(R.id.buttonRegister);
         errorTextView = findViewById(R.id.errorTextView);
-        errorTextView.setVisibility(View.GONE); // alapból rejtve
+        errorTextView.setVisibility(View.GONE);
 
         registerButton.setOnClickListener(v -> {
-            errorTextView.setVisibility(View.GONE); // reset hibaüzenet
+            Animation scaleAnimation = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.button_scale);
+            registerButton.startAnimation(scaleAnimation);
+
+            errorTextView.setVisibility(View.GONE);
 
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
             String username = usernameEditText.getText().toString().trim();
 
-            // --- Validáció ---
             if (username.isEmpty()) {
                 showError("Add meg a felhasználónevet!");
                 return;
@@ -71,7 +75,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // --- Firebase regisztráció ---
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

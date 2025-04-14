@@ -3,6 +3,8 @@ package com.example.gyorsnyomdaapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,17 +30,19 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         errorTextView = findViewById(R.id.errorTextView);
-        errorTextView.setVisibility(View.GONE); // Kezdetben rejtve
+        errorTextView.setVisibility(View.GONE);
 
         mAuth = FirebaseAuth.getInstance();
 
         loginButton.setOnClickListener(v -> {
-            errorTextView.setVisibility(View.GONE); // előző hiba törlése
+            Animation scaleAnimation = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.button_scale);
+            loginButton.startAnimation(scaleAnimation);
+
+            errorTextView.setVisibility(View.GONE);
 
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
 
-            // --- Validáció ---
             if (email.isEmpty()) {
                 showError("Az email cím megadása kötelező!");
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -60,13 +64,11 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Ha sikeres a bejelentkezés, átirányítás a MainActivity-be
                         FirebaseUser user = mAuth.getCurrentUser();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        finish(); // A LoginActivity bezárása
+                        finish();
                     } else {
-                        // Ha nem sikerül a bejelentkezés
                         showError("Hibás email cím vagy jelszó!");
                     }
                 });
