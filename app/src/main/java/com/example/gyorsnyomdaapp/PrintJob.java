@@ -11,24 +11,24 @@ public class PrintJob {
     private String status;
     private @ServerTimestamp Date timestamp;
     private int copies;
-    private String colorMode;   // ÚJ: Pl. "Fekete-fehér", "Színes"
-    private String paperSize;   // ÚJ: Pl. "A4", "A3", stb.
-    private String paperType;   // ÚJ: Pl. "Puha", "Kemény"
-    private String notes;       // ÚJ: Megjegyzés
+    private String colorMode;
+    private String paperSize;
+    private String paperType;
+    private String notes;
 
     // Státusz konstansok
     public static final String STATUS_UPLOADED = "Feltöltve";
     public static final String STATUS_PRINT_ORDERED = "Nyomtatásra leadva";
 
-    // Színmód konstansok (stringként tároljuk, de lehetne enum is)
+    // Színmód konstansok
     public static final String COLOR_MODE_BW = "Fekete-fehér";
     public static final String COLOR_MODE_COLOR = "Színes";
 
     // Papírtípus konstansok
-    public static final String PAPER_TYPE_SOFT = "Puha"; // Normál irodai papír
-    public static final String PAPER_TYPE_HARD = "Kemény"; // Pl. karton, fotópapír
+    public static final String PAPER_TYPE_SOFT = "Puha";
+    public static final String PAPER_TYPE_HARD = "Kemény";
 
-    // Papírméretek (ezeket egy Spinnerből fogjuk választani)
+    // Papírméretek
     public static final String[] PAPER_SIZES = {"A6", "A5", "A4", "A3", "A2", "A1", "A0"};
 
 

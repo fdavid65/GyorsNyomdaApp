@@ -4,10 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.content.Context; // Rezgéshez
-import android.os.Build;         // Rezgéshez
-import android.os.VibrationEffect; // Rezgéshez
-import android.os.Vibrator;       // Rezgéshez
+import android.content.Context;                     // Rezgéshez
+import android.os.Build;                            // Rezgéshez
+import android.os.VibrationEffect;                  // Rezgéshez
+import android.os.Vibrator;                         // Rezgéshez
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import android.Manifest;                            // Engedélyellenőrzéshez
+import android.content.pm.PackageManager;           // Engedélyellenőrzéshez
+import androidx.core.app.ActivityCompat;            // Engedélyellenőrzéshez
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -43,7 +50,6 @@ public class EditJobActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private String documentId;
-    // Eredeti értékek tárolása (nem feltétlenül szükséges, de hasznos lehet összehasonlításhoz)
     private String currentFileName;
     private int currentCopies;
     private String currentColorMode;
@@ -51,7 +57,6 @@ public class EditJobActivity extends AppCompatActivity {
     private String currentPaperType;
     private String currentNotes;
 
-    // Konstansok az Intent extrákhoz (lehetnek a PrintJob-ban is, vagy itt)
     public static final String EXTRA_DOCUMENT_ID = "JOB_DOCUMENT_ID";
     public static final String EXTRA_FILE_NAME = "JOB_FILE_NAME";
     public static final String EXTRA_COPIES = "JOB_COPIES";
@@ -83,7 +88,6 @@ public class EditJobActivity extends AppCompatActivity {
         buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
         progressBarEdit = findViewById(R.id.progressBarEdit);
 
-        // Spinner feltöltése
         ArrayAdapter<String> paperSizeAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, PrintJob.PAPER_SIZES);
         paperSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,7 +108,7 @@ public class EditJobActivity extends AppCompatActivity {
                 return;
             }
 
-            populateUI(); // UI feltöltése az adatokkal
+            populateUI();
 
         } else {
             Toast.makeText(this, "Hiba: Szerkesztendő adatok hiányoznak.", Toast.LENGTH_LONG).show();
@@ -112,6 +116,7 @@ public class EditJobActivity extends AppCompatActivity {
             return;
         }
 
+        createNotificationChannel();
         buttonSaveChanges.setOnClickListener(v -> saveChanges());
     }
 
@@ -119,14 +124,14 @@ public class EditJobActivity extends AppCompatActivity {
         textViewEditFileName.setText(currentFileName);
         editTextEditCopies.setText(String.valueOf(currentCopies));
 
-        // Színmód beállítása
+        // Színmód
         if (PrintJob.COLOR_MODE_COLOR.equals(currentColorMode)) {
             radioGroupEditColorMode.check(R.id.radioButtonEditColor);
         } else {
             radioGroupEditColorMode.check(R.id.radioButtonEditBw); // Alapértelmezett fekete-fehér
         }
 
-        // Papírméret beállítása
+        // Papírméret
         if (currentPaperSize != null) {
             int paperSizePosition = Arrays.asList(PrintJob.PAPER_SIZES).indexOf(currentPaperSize);
             if (paperSizePosition >= 0) {
@@ -140,11 +145,11 @@ public class EditJobActivity extends AppCompatActivity {
         }
 
 
-        // Papírtípus beállítása
+        // Papírtípus
         if (PrintJob.PAPER_TYPE_HARD.equals(currentPaperType)) {
             radioGroupEditPaperType.check(R.id.radioButtonEditHardPaper);
         } else {
-            radioGroupEditPaperType.check(R.id.radioButtonEditSoftPaper); // Alapértelmezett puha
+            radioGroupEditPaperType.check(R.id.radioButtonEditSoftPaper);
         }
 
         editTextEditNotes.setText(currentNotes != null ? currentNotes : "");
@@ -184,7 +189,6 @@ public class EditJobActivity extends AppCompatActivity {
         updates.put("paperSize", newPaperSize);
         updates.put("paperType", newPaperType);
         updates.put("notes", newNotes);
-        // A státuszt itt nem változtatjuk, hacsak nem akarod (pl. "Módosítva")
 
         db.collection("printJobs").document(documentId)
                 .update(updates)
@@ -197,10 +201,10 @@ public class EditJobActivity extends AppCompatActivity {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             v.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
                         } else {
-                            //deprecated in API 26
                             v.vibrate(200);
                         }
                     }
+                    sendJobModifiedNotification(currentFileName != null ? currentFileName : "Egy munka");
                     // REZGÉS VÉGE
                     finish();
                 })
@@ -209,6 +213,28 @@ public class EditJobActivity extends AppCompatActivity {
                     Toast.makeText(EditJobActivity.this, "Hiba a mentéskor: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     Log.w(TAG, "Error updating document", e);
                 });
+    }
+
+    private void sendJobModifiedNotification(String jobName) {
+        int notificationIcon = android.R.drawable.ic_dialog_info;
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(notificationIcon)
+                .setContentTitle("Munka Módosítva")
+                .setContentText("A(z) '" + jobName + "' munka sikeresen frissült.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // Engedély ellenőrzése újabb Androidokon
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                Log.w("EditJobActivity", "Nincs értesítési engedély, nem küldünk.");
+                return;
+            }
+        }
+        notificationManager.notify(101, builder.build());
     }
 
     private void setInProgressUI(boolean inProgress) {
@@ -231,5 +257,20 @@ public class EditJobActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private static final String CHANNEL_ID = "munka_modositas_csatorna"; // Egyedi név a fióknak
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // Csak újabb Androidon kell
+            CharSequence name = "Munka Módosítások"; // A fiók neve, amit a felhasználó láthat
+            String description = "Értesítések a munkák módosításáról";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

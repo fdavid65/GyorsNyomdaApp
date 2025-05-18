@@ -1,4 +1,4 @@
-package com.example.gyorsnyomdaapp; // Győződj meg róla, hogy ez a te csomagneved!
+package com.example.gyorsnyomdaapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,14 +37,13 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
 
-    private RecyclerView recyclerViewUploadedJobs, recyclerViewPrintOrderedJobs, recyclerViewRecentJobs; // ÚJ: Recent Jobs RecyclerView
-    private PrintJobAdapter uploadedJobsAdapter, printOrderedJobsAdapter, recentJobsAdapter;       // ÚJ: Recent Jobs Adapter
-    private List<PrintJob> uploadedJobList, printOrderedJobList, recentJobsList;                   // ÚJ: Recent Jobs List
-    private TextView textViewEmptyUploadedList, textViewEmptyPrintOrderedList, textViewEmptyRecentJobsList; // ÚJ: Empty Recent Jobs TextView
+    private RecyclerView recyclerViewUploadedJobs, recyclerViewPrintOrderedJobs, recyclerViewRecentJobs;
+    private PrintJobAdapter uploadedJobsAdapter, printOrderedJobsAdapter, recentJobsAdapter;
+    private List<PrintJob> uploadedJobList, printOrderedJobList, recentJobsList;
+    private TextView textViewEmptyUploadedList, textViewEmptyPrintOrderedList, textViewEmptyRecentJobsList;
     private MaterialButton buttonOrderAllUploaded;
     private FloatingActionButton fabUpload;
 
-    // Státusz konstansok
     public static final String STATUS_UPLOADED = "Feltöltve";
     public static final String STATUS_PRINT_ORDERED = "Megrendelve";
 
@@ -70,32 +69,26 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
         // UI elemek inicializálása
         recyclerViewUploadedJobs = findViewById(R.id.recyclerViewUploadedJobs);
         recyclerViewPrintOrderedJobs = findViewById(R.id.recyclerViewPrintOrderedJobs);
-        recyclerViewRecentJobs = findViewById(R.id.recyclerViewRecentJobs); // ÚJ
+        recyclerViewRecentJobs = findViewById(R.id.recyclerViewRecentJobs);
         textViewEmptyUploadedList = findViewById(R.id.textViewEmptyUploadedList);
         textViewEmptyPrintOrderedList = findViewById(R.id.textViewEmptyPrintOrderedList);
-        textViewEmptyRecentJobsList = findViewById(R.id.textViewEmptyRecentJobsList); // ÚJ
+        textViewEmptyRecentJobsList = findViewById(R.id.textViewEmptyRecentJobsList);
         buttonOrderAllUploaded = findViewById(R.id.buttonOrderAllUploaded);
         fabUpload = findViewById(R.id.fabUpload);
 
         // Listák inicializálása
         uploadedJobList = new ArrayList<>();
         printOrderedJobList = new ArrayList<>();
-        recentJobsList = new ArrayList<>(); // ÚJ
+        recentJobsList = new ArrayList<>();
 
-        // Adapterek inicializálása
-        // Mindhárom adapter ugyanazt a listenert (this) használja.
-        // Ez azt jelenti, hogy ha a "Legutóbbi 5" listában rákattintasz egy elemre,
-        // az onEditJobClicked/onDeleteJobClicked ugyanúgy lefut.
-        // Ha más viselkedést szeretnél, külön listenert kellene implementálni vagy
-        // az onEdit/onDelete metódusokban ellenőrizni, melyik listából jött a kattintás.
         uploadedJobsAdapter = new PrintJobAdapter(uploadedJobList, this);
         printOrderedJobsAdapter = new PrintJobAdapter(printOrderedJobList, this);
-        recentJobsAdapter = new PrintJobAdapter(recentJobsList, this); // ÚJ
+        recentJobsAdapter = new PrintJobAdapter(recentJobsList, this);
 
         // RecyclerView-k beállítása
         setupRecyclerView(recyclerViewUploadedJobs, uploadedJobsAdapter);
         setupRecyclerView(recyclerViewPrintOrderedJobs, printOrderedJobsAdapter);
-        setupRecyclerView(recyclerViewRecentJobs, recentJobsAdapter); // ÚJ
+        setupRecyclerView(recyclerViewRecentJobs, recentJobsAdapter);
 
         fabUpload.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, UploadActivity.class);
@@ -106,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
         buttonOrderAllUploaded.setOnClickListener(v -> confirmOrderAllUploadedJobs());
     }
 
-    // Segédfüggvény a RecyclerView-k beállításához
+    //  RecyclerView-k beállítása
     private void setupRecyclerView(RecyclerView recyclerView, PrintJobAdapter adapter) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this) {
             @Override
@@ -123,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
         if (currentUser != null) {
             loadUploadedJobs();
             loadPrintOrderedJobs();
-            loadLastFiveJobs(); // ÚJ: Harmadik lista betöltése
+            loadLastFiveJobs();
         } else {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -200,13 +193,13 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        recentJobsList.clear(); // Az új listát ürítjük
+                        recentJobsList.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             PrintJob job = document.toObject(PrintJob.class);
                             job.setDocumentId(document.getId());
-                            recentJobsList.add(job); // Az új listához adjuk hozzá
+                            recentJobsList.add(job);
                         }
-                        recentJobsAdapter.notifyDataSetChanged(); // Az új adaptert frissítjük
+                        recentJobsAdapter.notifyDataSetChanged();
                         Log.d(TAG, "Loaded " + recentJobsList.size() + " RECENT jobs.");
                     } else {
                         Log.w(TAG, "Error getting RECENT documents: ", task.getException());
@@ -214,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
                         recentJobsList.clear();
                         recentJobsAdapter.notifyDataSetChanged();
                     }
-                    checkIfListsAreEmpty(); // UI frissítése
+                    checkIfListsAreEmpty();
                 });
     }
 
@@ -255,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
     }
 
     private void confirmOrderAllUploadedJobs() {
-        // ... (változatlan) ...
         if (uploadedJobList.isEmpty()) {
             Toast.makeText(this, "Nincsenek nyomtatásra váró fájlok.", Toast.LENGTH_SHORT).show();
             return;
@@ -271,7 +263,6 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
     }
 
     private void orderAllUploadedJobs() {
-        // ... (változatlan) ...
         if (uploadedJobList.isEmpty()) { return; }
         WriteBatch batch = db.batch();
         for (PrintJob job : uploadedJobList) {
@@ -281,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
         }
         batch.commit().addOnSuccessListener(aVoid -> {
             Toast.makeText(MainActivity.this, "Munkák sikeresen nyomtatásra leadva!", Toast.LENGTH_SHORT).show();
-            refreshAllLists(); // Mindhárom listát frissítjük
+            refreshAllLists();
         }).addOnFailureListener(e -> {
             Toast.makeText(MainActivity.this, "Hiba a munkák státuszának frissítésekor: " + e.getMessage(), Toast.LENGTH_LONG).show();
             Log.w(TAG, "Error updating job statuses", e);
@@ -290,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
 
     @Override
     public void onEditJobClicked(PrintJob job) {
-        // ... (változatlan) ...
         if (!PrintJob.STATUS_UPLOADED.equals(job.getStatus())) {
             Toast.makeText(this, "Ez a munka már nyomtatásra lett leadva, nem szerkeszthető.", Toast.LENGTH_SHORT).show();
             return;
@@ -309,7 +299,6 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
 
     @Override
     public void onDeleteJobClicked(PrintJob job) {
-        // ... (változatlan) ...
         new AlertDialog.Builder(this)
                 .setTitle("Munka törlése")
                 .setMessage("Biztosan törölni szeretnéd a '" + job.getFileName() + "' nevű munkát?")
@@ -322,9 +311,7 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
     }
 
     private void deletePrintJob(PrintJob job) {
-        // ... (változatlan, de a végén a refreshAllLists() hívódik) ...
-        if (job.getDocumentId() == null || job.getDocumentId().isEmpty()) { /* ... */ return; }
-        // final String statusOfDeletedJob = job.getStatus(); // Erre már nem feltétlenül van szükség, ha mindent frissítünk
+        if (job.getDocumentId() == null || job.getDocumentId().isEmpty()) { return; }
 
         db.collection("printJobs").document(job.getDocumentId())
                 .delete()
@@ -358,7 +345,6 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
                 });
     }
 
-    // Új közös frissítő metódus
     private void refreshAllLists() {
         loadUploadedJobs();
         loadPrintOrderedJobs();
@@ -381,7 +367,6 @@ public class MainActivity extends AppCompatActivity implements OnPrintJobInterac
     }
 
     private void logoutUser() {
-        // ... (változatlan) ...
         new AlertDialog.Builder(this)
                 .setTitle("Kijelentkezés")
                 .setMessage("Biztosan kijelentkezel?")

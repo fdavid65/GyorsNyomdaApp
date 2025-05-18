@@ -1,4 +1,4 @@
-package com.example.gyorsnyomdaapp; // Győződj meg róla, hogy ez a te csomagneved!
+package com.example.gyorsnyomdaapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -46,12 +46,10 @@ public class UploadActivity extends AppCompatActivity {
     private TextView textViewSelectedFileName;
     private ImageView imageViewUploadPreview;
     private EditText editTextCopies;
-    // ÚJ UI elemek
     private RadioGroup radioGroupColorMode;
     private Spinner spinnerPaperSize;
     private RadioGroup radioGroupPaperType;
     private EditText editTextNotes;
-    // ---
     private ProgressBar progressBarUpload;
 
     private Uri selectedFileUri;
@@ -85,12 +83,10 @@ public class UploadActivity extends AppCompatActivity {
         textViewSelectedFileName = findViewById(R.id.textViewSelectedFileName);
         imageViewUploadPreview = findViewById(R.id.imageViewUploadPreview);
         editTextCopies = findViewById(R.id.editTextCopies);
-        // ÚJ UI elemek inicializálása
         radioGroupColorMode = findViewById(R.id.radioGroupColorMode);
         spinnerPaperSize = findViewById(R.id.spinnerPaperSize);
         radioGroupPaperType = findViewById(R.id.radioGroupPaperType);
         editTextNotes = findViewById(R.id.editTextNotes);
-        // ---
         progressBarUpload = findViewById(R.id.progressBarUpload);
 
         // Spinner feltöltése papírméretekkel
@@ -98,7 +94,7 @@ public class UploadActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, PrintJob.PAPER_SIZES);
         paperSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPaperSize.setAdapter(paperSizeAdapter);
-        // Alapértelmezett kiválasztás (pl. A4)
+        // Alapértelmezett kiválasztás
         int defaultA4Position = Arrays.asList(PrintJob.PAPER_SIZES).indexOf("A4");
         if (defaultA4Position >= 0) {
             spinnerPaperSize.setSelection(defaultA4Position);
@@ -202,12 +198,10 @@ public class UploadActivity extends AppCompatActivity {
             if (copies <= 0) { editTextCopies.setError("A példányszám legalább 1 kell legyen"); editTextCopies.requestFocus(); return; }
         } catch (NumberFormatException e) { editTextCopies.setError("Érvénytelen számformátum"); editTextCopies.requestFocus(); return; }
 
-        // ÚJ MEZŐK KIOLVASÁSA
         String colorMode = (radioGroupColorMode.getCheckedRadioButtonId() == R.id.radioButtonColor) ? PrintJob.COLOR_MODE_COLOR : PrintJob.COLOR_MODE_BW;
         String paperType = (radioGroupPaperType.getCheckedRadioButtonId() == R.id.radioButtonHardPaper) ? PrintJob.PAPER_TYPE_HARD : PrintJob.PAPER_TYPE_SOFT;
         String paperSize = spinnerPaperSize.getSelectedItem().toString();
         String notes = editTextNotes.getText().toString().trim();
-        // ---
 
         setUploadInProgressUI(true);
 
@@ -221,14 +215,12 @@ public class UploadActivity extends AppCompatActivity {
             progressBarUpload.setProgress((int) progress);
         }).addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
             String downloadUrl = uri.toString();
-            // ÚJ MEZŐK ÁTADÁSA A MENTÉSHEZ
             saveJobToFirestore(currentUser.getUid(), selectedFileName, downloadUrl, copies, colorMode, paperSize, paperType, notes);
         }).addOnFailureListener(e -> { Log.e(TAG, "Error getting download URL", e); Toast.makeText(UploadActivity.this, "Hiba: " + e.getMessage(), Toast.LENGTH_LONG).show(); setUploadInProgressUI(false);
         })).addOnFailureListener(e -> { Log.e(TAG, "File upload failed", e); Toast.makeText(UploadActivity.this, "Hiba: " + e.getMessage(), Toast.LENGTH_LONG).show(); setUploadInProgressUI(false);
         });
     }
 
-    // saveJobToFirestore frissítve az új paraméterekkel
     private void saveJobToFirestore(String userId, String originalFileName, String fileUrl, int copies,
                                     String colorMode, String paperSize, String paperType, String notes) {
         PrintJob printJob = new PrintJob(userId, originalFileName, fileUrl, PrintJob.STATUS_UPLOADED, copies, colorMode, paperSize, paperType, notes);
@@ -252,7 +244,6 @@ public class UploadActivity extends AppCompatActivity {
         buttonSelectFile.setEnabled(!inProgress);
         editTextCopies.setEnabled(!inProgress);
         imageViewUploadPreview.setEnabled(!inProgress);
-        // ÚJ UI ELEMEK ENGEDÉLYEZÉSE/LETILTÁSA
         spinnerPaperSize.setEnabled(!inProgress);
         editTextNotes.setEnabled(!inProgress);
         for (int i = 0; i < radioGroupColorMode.getChildCount(); i++) {
@@ -261,7 +252,6 @@ public class UploadActivity extends AppCompatActivity {
         for (int i = 0; i < radioGroupPaperType.getChildCount(); i++) {
             radioGroupPaperType.getChildAt(i).setEnabled(!inProgress);
         }
-        // ---
     }
 
     @Override
