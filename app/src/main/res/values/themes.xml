@@ -1,9 +1,38 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.GyorsNyomdaApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- Fő alkalmazás téma (világos mód) -->
+    <style name="Theme.GyorsNyomdaApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Alapvető színbeállítások -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/white</item> <!-- Szöveg/ikon színe a primaryColor-on -->
+
+        <item name="colorSecondary">@color/accentColor</item>
+        <item name="colorSecondaryVariant">@color/accentColor</item> <!-- Vagy @color/primaryColor -->
+        <item name="colorOnSecondary">@color/white</item> <!-- Szöveg/ikon színe a colorSecondary-n -->
+
+        <item name="android:colorBackground">@color/backgroundColor</item> <!-- Activity-k általános háttere -->
+        <item name="colorSurface">@color/backgroundColor</item> <!-- CardView-k, Dialog-ok háttere -->
+        <item name="colorOnBackground">@color/textColor</item> <!-- Szöveg az android:colorBackground-on -->
+        <item name="colorOnSurface">@color/textColor</item> <!-- Szöveg a colorSurface-n -->
+
+        <!-- Státuszbár színe -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Egyéb alkalmazás szintű téma beállítások -->
+        <item name="android:windowBackground">@color/backgroundColor</item>
+        <item name="android:textColor">@color/textColor</item>
+
+        <!-- Toolbar stílus hivatkozás (ha a styles.xml-ben definiálod) -->
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
     </style>
 
-    <style name="Theme.GyorsNyomdaApp" parent="Base.Theme.GyorsNyomdaApp" />
+    <!-- Ha szeretnél egy specifikus sötét módot, akkor azt a
+         app/src/main/res/values-night/themes.xml fájlban definiáld hasonlóan,
+         de más színekkel, pl.:
+    <style name="Theme.GyorsNyomdaApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_dark_mode_color</item>
+        ... stb ...
+    </style>
+    Ha a DayNight.NoActionBar szülőt használod, és nem definiálsz külön éjszakai
+    témát, akkor a rendszer megpróbálja automatikusan generálni. -->
 </resources>

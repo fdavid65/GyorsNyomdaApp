@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".EditJobActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_edit_job"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/primaryColor"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="Munka Szerkesztése" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Fájlnév (nem módosítható):"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/textViewEditFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            tools:text="dokumentum_neve.pdf"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="@color/textColor"
+            android:padding="8dp"
+            android:background="@drawable/disabled_edittext_background"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldEditCopies"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Példányszám">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEditCopies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Színmód -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Nyomtatás színe:"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="@color/textColor"/>
+        <RadioGroup
+            android:id="@+id/radioGroupEditColorMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+            <RadioButton
+                android:id="@+id/radioButtonEditBw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/color_mode_bw"/>
+            <RadioButton
+                android:id="@+id/radioButtonEditColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/color_mode_color" />
+        </RadioGroup>
+
+        <!-- Papírméret -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Papírméret:"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="@color/textColor"/>
+        <Spinner
+            android:id="@+id/spinnerEditPaperSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="8dp"
+            style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+        <!-- Papírtípus -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Papír vastagsága:"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="@color/textColor"/>
+        <RadioGroup
+            android:id="@+id/radioGroupEditPaperType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+            <RadioButton
+                android:id="@+id/radioButtonEditSoftPaper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paper_type_soft"/>
+            <RadioButton
+                android:id="@+id/radioButtonEditHardPaper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/paper_type_hard"/>
+        </RadioGroup>
+
+        <!-- Megjegyzés -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldEditNotes"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Megjegyzés (opcionális)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEditNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarEdit"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSaveChanges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/accentColor"
+            android:text="Módosítások Mentése"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+</ScrollView>

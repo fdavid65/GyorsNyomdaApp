@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Fájlnév -->
+        <TextView
+            android:id="@+id/textViewFileName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Fájlnév Nagyon Hosszú Lehet.pdf"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="@color/textColor"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonEditJob"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Példányszám -->
+        <TextView
+            android:id="@+id/textViewCopies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Példányszám: 5"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewFileName" />
+
+        <!-- Színmód -->
+        <TextView
+            android:id="@+id/textViewColorModeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Szín:"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textStyle="bold"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCopies" />
+
+        <TextView
+            android:id="@+id/textViewColorModeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Színes"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toEndOf="@+id/textViewColorModeLabel"
+            app:layout_constraintTop_toTopOf="@+id/textViewColorModeLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewColorModeLabel"
+            android:layout_marginStart="4dp"/>
+
+        <!-- Papírméret -->
+        <TextView
+            android:id="@+id/textViewPaperSizeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Méret:"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textStyle="bold"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewColorModeLabel" />
+
+        <TextView
+            android:id="@+id/textViewPaperSizeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="A4"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toEndOf="@+id/textViewPaperSizeLabel"
+            app:layout_constraintTop_toTopOf="@+id/textViewPaperSizeLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPaperSizeLabel"
+            android:layout_marginStart="4dp"/>
+
+        <!-- Papírtípus -->
+        <TextView
+            android:id="@+id/textViewPaperTypeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Papír:"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textStyle="bold"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPaperSizeLabel" />
+
+        <TextView
+            android:id="@+id/textViewPaperTypeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Kemény"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toEndOf="@+id/textViewPaperTypeLabel"
+            app:layout_constraintTop_toTopOf="@+id/textViewPaperTypeLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPaperTypeLabel"
+            android:layout_marginStart="4dp"/>
+
+        <!-- Megjegyzés (ha van) -->
+        <TextView
+            android:id="@+id/textViewNotes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Megjegyzés: Kérem sürgősen, kétoldalasan, ha lehet. Köszönöm szépen!"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/textColor"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPaperTypeLabel"
+            app:layout_constraintEnd_toEndOf="@+id/textViewFileName"/> <!-- Ugyanolyan széles, mint a fájlnév -->
+
+
+        <!-- Státusz -->
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Státusz: Feltöltve"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/accentColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNotes" /> <!-- Most a megjegyzés alá -->
+
+        <!-- Időbélyeg -->
+        <TextView
+            android:id="@+id/textViewTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2023-01-01 10:00"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatus" />
+
+
+        <!-- Gombok -->
+        <ImageButton
+            android:id="@+id/buttonEditJob"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_edit"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Szerkesztés"
+            android:padding="8dp"
+            app:tint="@color/primaryColor"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDeleteJob"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewFileName"
+            android:layout_marginEnd="8dp"/>
+
+        <ImageButton
+            android:id="@+id/buttonDeleteJob"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Törlés"
+            android:padding="8dp"
+            app:tint="@android:color/holo_red_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewFileName"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

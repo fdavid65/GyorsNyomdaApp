@@ -1,11 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Alap stílusok -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/accentColor</item>
-        <item name="android:windowBackground">@color/backgroundColor</item>
-        <item name="android:textColor">@color/textColor</item>
+    <!-- Toolbar stílus -->
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@color/primaryColor</item>
+        <item name="titleTextColor">@color/white</item>
+        <!-- Ha az ikonok színét is expliciten be akarod állítani a Toolbaron -->
+        <item name="android:theme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <!-- A felugró menü stílusa (pl. a 3 pontos menü) -->
+        <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
     </style>
+
+    <!-- Material AlertDialog témafedvény és specifikus részek stílusa -->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorSecondary">@color/accentColor</item>
+        <item name="colorSurface">@color/backgroundColor</item> <!-- Dialog háttere -->
+        <item name="colorOnSurface">@color/textColor</item> <!-- Szöveg a dialogon -->
+        <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.TitleText</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/AlertDialog.BodyText</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AlertDialog.PositiveButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertDialog.NegativeButton</item>
+    </style>
+
+    <style name="AlertDialog.TitleText" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/textColor</item>
+        <!-- Egyéb cím stílusok, ha kellenek -->
+    </style>
+
+    <style name="AlertDialog.BodyText" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/textColor</item>
+        <!-- Egyéb törzsszöveg stílusok, ha kellenek -->
+    </style>
+
+    <style name="AlertDialog.PositiveButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/primaryColor</item>
+        <!-- Egyéb pozitív gomb stílusok -->
+    </style>
+
+    <style name="AlertDialog.NegativeButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/primaryColor</item>
+        <!-- Egyéb negatív gomb stílusok -->
+    </style>
+
+    <!-- Ide jöhetnek további egyedi widget stílusok, ha szükséged van rájuk a jövőben -->
+    <!-- Például egyedi gombstílus:
+    <style name="Widget.App.MyCustomButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/some_color</item>
+        <item name="backgroundTint">@color/another_color</item>
+    </style>
+    -->
 </resources>

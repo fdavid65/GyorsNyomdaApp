@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".UploadActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_upload"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/primaryColor"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="Fájl Feltöltése" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSelectFile"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Fájl kiválasztása"
+            android:textColor="@color/primaryColor"
+            app:strokeColor="@color/primaryColor" />
+
+        <TextView
+            android:id="@+id/textViewSelectedFileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Nincs fájl kiválasztva"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/textColor" />
+
+        <ImageView
+            android:id="@+id/imageViewUploadPreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            android:contentDescription="Kiválasztott kép előnézete"
+            android:background="#EEEEEE"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldCopies"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Példányszám">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCopies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Színmód -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Nyomtatás színe:"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="@color/textColor"/>
+        <RadioGroup
+            android:id="@+id/radioGroupColorMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+            <RadioButton
+                android:id="@+id/radioButtonBw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/color_mode_bw"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/radioButtonColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/color_mode_color" />
+        </RadioGroup>
+
+        <!-- Papírméret -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Papírméret:"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="@color/textColor"/>
+        <Spinner
+            android:id="@+id/spinnerPaperSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="16dp"
+            style="@style/Widget.AppCompat.Spinner.Underlined"/> <!-- Vagy más stílus -->
+
+
+        <!-- Papírtípus -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Papír vastagsága:"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="@color/textColor"/>
+        <RadioGroup
+            android:id="@+id/radioGroupPaperType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+            <RadioButton
+                android:id="@+id/radioButtonSoftPaper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paper_type_soft"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/radioButtonHardPaper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/paper_type_hard"/>
+        </RadioGroup>
+
+        <!-- Megjegyzés -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldNotes"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Megjegyzés (opcionális)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarUpload"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonUploadFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/accentColor"
+            android:text="Feltöltés"
+            android:textColor="@android:color/white"
+            android:enabled="false"/>
+    </LinearLayout>
+</ScrollView>

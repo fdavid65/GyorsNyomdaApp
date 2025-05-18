@@ -9,4 +9,8 @@
     <string name="register_button">Regisztráció</string>
     <string name="redirect_to_login">Már van fiókom, bejelentkezés</string>
     <string name="redirect_to_register">Még nincs fiókom, regisztráció</string>
+    <string name="color_mode_bw">Fekete-fehér</string>
+    <string name="color_mode_color">Színes</string>
+    <string name="paper_type_soft">Normál (puha)</string>
+    <string name="paper_type_hard">Vastag (kemény)</string>
 </resources>

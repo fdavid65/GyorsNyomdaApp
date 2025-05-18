@@ -90,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             if (updateTask.isSuccessful()) {
                                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                                 startActivity(intent);
+                                                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Login comes from left, Register slides out right
                                                 finish();
                                             } else {
                                                 showError("Hiba a felhasználónév beállításakor.");
@@ -109,6 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         findViewById(R.id.textViewLoginRedirect).setOnClickListener(v -> {
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right); // Login comes from left, Register slides out right
             finish();
         });
     }

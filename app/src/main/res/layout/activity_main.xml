@@ -1,42 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="?android:colorBackground">
+    android:background="@color/backgroundColor"
+    tools:context=".MainActivity">
 
-    <!-- LinearLayout a tartalomhoz -->
-    <LinearLayout
-        android:id="@+id/welcomeContainer"
-        android:layout_width="0dp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <!-- Üdvözlő szöveg -->
-        <TextView
-            android:id="@+id/textViewWelcome"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primaryColor"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Nyomtatási Munkáim" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Üdvözlünk, felhasználónév!"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="?android:textColorPrimary"
-            android:layout_marginBottom="16dp"/>
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <!-- Kijelentkezés gomb -->
-        <Button
-            android:id="@+id/buttonLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kijelentkezés" />
-    </LinearLayout>
+            <!-- Feltöltések rész -->
+            <TextView
+                android:id="@+id/textViewUploadedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Feltöltések"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:textColor="@color/textColor"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewUploadedJobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_print_job" />
+
+            <TextView
+                android:id="@+id/textViewEmptyUploadedList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nincsenek feltöltött munkák."
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/textColor"
+                android:gravity="center"
+                android:padding="16dp"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonOrderAllUploaded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Összes feltöltött megrendelése"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/accentColor"
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
+
+            <!-- Megrendelések rész -->
+            <TextView
+                android:id="@+id/textViewOrderedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Megrendelések"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:textColor="@color/textColor"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="4dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPrintOrderedJobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_print_job" />
+
+            <TextView
+                android:id="@+id/textViewEmptyPrintOrderedList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nincsenek megrendelt munkák."
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/textColor"
+                android:gravity="center"
+                android:padding="16dp"
+                android:visibility="gone" />
+
+            <!-- ÚJ: Legutóbbi munkák rész -->
+            <TextView
+                android:id="@+id/textViewRecentJobsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Legutóbbi 5 munka (vegyes státusz)"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:textColor="@color/textColor"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="4dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewRecentJobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_print_job" />
+
+            <TextView
+                android:id="@+id/textViewEmptyRecentJobsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nincsenek korábbi munkák."
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/textColor"
+                android:gravity="center"
+                android:padding="16dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/accentColor"
+        app:tint="@android:color/white"
+        android:contentDescription="Új fájl feltöltése" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

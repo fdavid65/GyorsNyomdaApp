@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
         findViewById(R.id.textViewRegisterRedirect).setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
         });
     }
@@ -66,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         startActivity(intent);
                         finish();
                     } else {
